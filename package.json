@@ -14,6 +14,10 @@
         "prettier": "prettier --write \"{lib,test}/**/*.js\"",
         "test": "DATASTORE_EMULATOR_HOST=localhost:8081 mocha test --recursive --exit --timeout 3000 --integration"
     },
+    "pre-commit": ["prettier"],
+    "engines": {
+        "node": ">=6.0"
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/sebelga/nsql-cache-datastore.git"

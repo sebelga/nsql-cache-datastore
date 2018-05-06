@@ -55,7 +55,7 @@ Great! You now have a LRU memory cache with the following configuration:
 
 To see how you can configure NsqlCache, please refer to its [API documentation](https://github.com/sebelga/nsql-cache#api).
 
-#### Examples
+### Examples
 
 > Info: In all the examples below, the error handling has been omitted for brevity.
 
@@ -98,7 +98,7 @@ const deleteUser = (id) => {
 
 As you can see, once you have initialized the cache you don't need to worry too much about it.  You use the @google-cloud/datastore API the exact same way.  
 
-It is **important to note** that if you do a _batch_ fetch of entities keys, nsql-cache will first look into the cache for the keys and it will _only_ fetch from the Datastore **the keys not found in the cache**.
+One **important feature** to highlight is that when you do a _batch_ fetch of entities keys, nsql-cache will first look into the cache for the keys and it will _only_ go and fetch from the Datastore **the keys not in the cache**.
 
 ```js
 const key1 = datastore.key(['User1', 123]); // in cache
@@ -109,7 +109,7 @@ const key3 = datastore.key(['User1', 789]);
 const users = await datastore.get([key1, key2, key3]);
 ```
 
-#### Disable cache / set the TTL on a request
+#### Disable the cache or change the TTL on a request
 
 The examples below are using the `datastore.get()` method, but the **same options** applies for `save()`, `update()`, `insert()`
 
@@ -151,7 +151,7 @@ await query.run();
 
 Again, there is no difference with what you are already doing with the @google-cloud/datastore API.
 
-##### Disable cache or set the TTL on a query
+##### Disable the cache or change the TTL of a query
 
 Just like with Keys, there is one additional configuration to the optional `options` argument to disable the cache _or_ change the TTL.
 
@@ -161,31 +161,24 @@ await query.run({ cache: { ttl: 300 } });
 ```
 
 As you might have noticed in the default configuration, queries have a very short TTL (5 seconds). This is because as soon as we create, update or delete an entity, any query that we have cached might be out of sync.  
-Depending on the usecase, 5 seconds might be acceptable or not. Remember that you can always disable the cache or lower the TTL on specific queries. You might decide that you never want queries to be cached, in such case  set the global TTL configuration for queries to **-1**.  
+Depending on the usecase, 5 seconds might be acceptable or not. Remember that you can always disable the cache or lower the TTL on specific queries. You might also decide that you never want queries to be cached, in such case set the global TTL duration for queries to **-1**.  
 
-But there is a better way: provide a **Redis client**. Have a look at [the nsql documentation about multi store](https://github.com/sebelga/nsql-cache#multi-cache-stores) to see how to achieve that.
+But there is a better way: provide a **_Redis_ client**. Have a look at [the nsql documentation about multi store](https://github.com/sebelga/nsql-cache#multi-cache-stores) to see how to achieve that.
 
 ## Advanced usage (cache not managed)
 
 If you don't want the datastore client to be wrapped, you can disable the behaviour.  
 You are then responsible to add and remove data to/from the cache.  
-First, disable the client wrap:
 
 ```js
-const Datastore = require('@google-cloud/datastore');
-const GstoreCache = require('nsql-cache');
-const dsAdapter = require('nsql-cache-datastore');
+...
 
-const datastore = new Datastore();
-const db = dsAdapter(datastore);
 const cache = gstoreCache.init({
     db,
     config: {
         wrapClient: false
     }
 });
-
-module.exports = { datastore, cache };
 ```
 
 Now let's see how you can manage the cache.
@@ -319,35 +312,18 @@ cache.queries
 
 ### With a Redis client
 
-When you save a Query in the cache and you have a Redis client, nsql-cache will automatically save a reference to this query in a Redis _**Set**_.  
+When you save a Query in the cache _and_ you have provided a Redis client, nsql-cache will automatically save a **reference** to this query in a Redis _**Set**_.  
 So how do you invalidate the cache?
 
-#### `cache.queries.clearQueriesEntityKind(entityKinds)`
+#### `cache.queries.clearQueriesByKind(entityKinds)`
 
-You need to call `clearQueriesEntityKind` each time you add, update or delete an entity.
+You need to call `clearQueriesByKind` each time you add, update or delete an entity.
 
 ```js
 const { datastore, cache } = require('./datastore');
 
-const query = datastore
-    .createQuery('Posts')
-    .limit(10);
-
-// You have cached a "Posts" Query with cache.queries.read()
-cache.queries.read(query)
-    .then((response) => {
-        ...
-    });
-
-// or with cache.queries.set()
-query.run()
-    .then((response) => {
-        cache.queries.set(query, response)
-            .then(...);
-    });
-
-// You now need to invalidate the cache for "Posts" entity Kind
-// when you create a new "Posts" entity
+// Each time you save a new "Posts" Entity Kind,
+// You now need to invalidate the queries cache for "Posts"
 
 const key = datastore.key(['Posts']);
 const data = { title: 'My Post' };
@@ -355,7 +331,7 @@ const data = { title: 'My Post' };
 datastore.save({ key, data })
     .then(() => {
         // invalidate all the queries for "Posts" Entity Kind
-        cache.queries.clearQueriesEntityKind(['Posts'])
+        cache.queries.clearQueriesByKind(['Posts'])
             .then(() => {
                 // All the Posts queries have been removed from the Redis cache
             });
