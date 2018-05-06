@@ -287,7 +287,7 @@ describe('Integration Tests (Datastore & Memory + Redis cache)', () => {
                 }));
         });
 
-        describe('clearQueriesEntityKind()', () => {
+        describe('clearQueriesByKind()', () => {
             it('should delete cache and remove from EntityKind Set', () => {
                 const userName = string.random();
                 const q = ds.createQuery('User').filter('name', userName);
@@ -311,7 +311,7 @@ describe('Integration Tests (Datastore & Memory + Redis cache)', () => {
                                     });
                                 })
                         )
-                        .then(() => cache.queries.clearQueriesEntityKind('User'))
+                        .then(() => cache.queries.clearQueriesByKind('User'))
                         .then(
                             () =>
                                 // Check that Query Cache does not exist anymore
@@ -365,7 +365,7 @@ describe('Integration Tests (Datastore & Memory + Redis cache)', () => {
                                         });
                                 })
                         )
-                        .then(() => cache.queries.clearQueriesEntityKind(['Post', 'Author']))
+                        .then(() => cache.queries.clearQueriesByKind(['Post', 'Author']))
                         .then(
                             () =>
                                 new Promise((resolve, reject) => {
