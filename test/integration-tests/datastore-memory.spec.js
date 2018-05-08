@@ -273,6 +273,40 @@ describe('Integration Test **wrapped** Datastore', () => {
             );
         });
 
+        it('should bypass the cache when global configuration is set to false', () => {
+            cache.config.global = false;
+
+            const oldName = string.random();
+            const newName = string.random();
+
+            const key = ds.key(['User', string.random()]);
+            const entityData = { name: newName };
+
+            return cache.keys.set(key, { name: oldName }).then(() =>
+                dsWrapped.save({ key, data: entityData }, { cache: false }).then(() =>
+                    dsWrapped.get(key).then(result => {
+                        expect(result[0].name).equal(newName);
+                    })
+                )
+            );
+        });
+
+        it('should get from the cache when forced in inline options', () => {
+            cache.config.global = false;
+
+            const oldName = string.random();
+            const newName = string.random();
+            const key = ds.key(['User', string.random()]);
+
+            return dsWrapped.save({ key, data: { name: oldName } }, { cache: true }).then(() =>
+                cache.keys.set(key, { name: newName }).then(() =>
+                    dsWrapped.get(key, { cache: true }).then(result => {
+                        expect(result[0].name).equal(newName);
+                    })
+                )
+            );
+        });
+
         it('should allow custom ttl value', () => {
             sinon.spy(cache, 'primeCache');
 
@@ -358,6 +392,24 @@ describe('Integration Test **wrapped** Datastore', () => {
                         })
                     );
             });
+        });
+
+        it('should by pass the cache when global configuration is set to false', () => {
+            cache.config.global = false;
+            const category = string.random();
+            const q = dsWrapped.createQuery('User').filter('category', category);
+            const key1 = dsWrapped.key(['User']);
+            const key2 = dsWrapped.key(['User']);
+
+            return dsWrapped
+                .save([{ key: key1, data: { category } }, { key: key2, data: { category } }])
+                .then(
+                    () => cache.queries.set(q, [{ category }]) // prime the cache with only 1 result
+                )
+                .then(() => q.run())
+                .then(([entities]) => {
+                    expect(entities.length).equal(2); // make sure we we do have our 2 entities
+                });
         });
 
         it('should allow custom ttl value', () => {
