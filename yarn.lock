@@ -3187,9 +3187,9 @@ npmlog@^4.0.2:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
-nsql-cache@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/nsql-cache/-/nsql-cache-1.0.1.tgz#af3ffeb0252da467c27eaab03debafde64d37944"
+nsql-cache@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/nsql-cache/-/nsql-cache-1.1.0.tgz#a4d01afa658083c023080d61926ebef248e8fd71"
   dependencies:
     arrify "^1.0.1"
     cache-manager "^2.9.0"
@@ -3957,7 +3957,7 @@ right-pad@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/right-pad/-/right-pad-1.0.1.tgz#8ca08c2cbb5b55e74dafa96bf7fd1a27d568c8d0"
 
-rimraf@^2.2.8, rimraf@^2.6.1:
+rimraf@2.6.2, rimraf@^2.2.8, rimraf@^2.6.1:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:
