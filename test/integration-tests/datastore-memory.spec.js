@@ -46,8 +46,8 @@ describe('Integration Tests (Datastore & Memory cache)', () => {
         });
     });
 
-    describe('gstoreCache.keys', () => {
-        beforeEach(function TestGstoreCacheKeys() {
+    describe('nsqlCache.keys', () => {
+        beforeEach(function TestNsqlCacheKeys() {
             if (argv.integration !== true) {
                 // Skip e2e tests suite
                 this.skip();
@@ -163,8 +163,8 @@ describe('Integration Tests (Datastore & Memory cache)', () => {
         });
     });
 
-    describe('gstoreCache.queries', () => {
-        beforeEach(function TestGstoreCacheQueries() {
+    describe('nsqlCache.queries', () => {
+        beforeEach(function TestNsqlCacheQueries() {
             if (argv.integration !== true) {
                 // Skip e2e tests suite
                 this.skip();
