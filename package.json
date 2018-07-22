@@ -7,6 +7,7 @@
         "lib": "lib"
     },
     "scripts": {
+        "commit": "git-cz",
         "lint": "eslint ./lib && eslint ./test",
         "local-datastore":
             "rimraf ./local-datastore && gcloud beta emulators datastore start --data-dir=$PWD/local-datastore",
