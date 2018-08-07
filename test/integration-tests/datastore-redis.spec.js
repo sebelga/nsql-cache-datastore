@@ -187,6 +187,8 @@ describe('Integration Tests (Datastore & Memory + Redis cache)', () => {
                     return ds
                         .save({ key, data: entityData })
                         .then(addTimeOut)
+                        .then(addTimeOut)
+                        .then(addTimeOut)
                         .then(() =>
                             cache.queries
                                 .read(q)

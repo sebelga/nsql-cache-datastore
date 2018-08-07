@@ -118,7 +118,7 @@ describe('Integration Tests (Datastore & Memory cache)', () => {
                 return ds.save({ key, data: entityData }).then(() =>
                     cache.keys
                         .read(key)
-                        .then(result => {
+                        .then(([result]) => {
                             expect(result).deep.equal(entityData);
                         })
                         .then(() =>
@@ -157,7 +157,7 @@ describe('Integration Tests (Datastore & Memory cache)', () => {
             });
 
             it('should return undefined when Key not found', () =>
-                cache.keys.read(ds.key(['User', string.random()])).then(result => {
+                cache.keys.read(ds.key(['User', string.random()])).then(([result]) => {
                     assert.isUndefined(result);
                 }));
         });
@@ -237,15 +237,15 @@ describe('Integration Test **wrapped** Datastore', () => {
 
             return cache.keys
                 .read(key)
-                .then(result => {
+                .then(([result]) => {
                     assert.isUndefined(result);
                 })
                 .then(() =>
                     dsWrapped.save({ key, data: entityData }).then(() =>
                         dsWrapped
                             .get(key)
-                            .then(result => {
-                                expect(result).deep.equal([entityData]);
+                            .then(([result]) => {
+                                expect(result).deep.equal(entityData);
                             })
                             .then(() =>
                                 cache.keys.read(key).then(result => {
@@ -385,6 +385,7 @@ describe('Integration Test **wrapped** Datastore', () => {
                     )
                     .then(() => dsWrapped.save({ key: key2, data: data2 }, { cache: false }))
                     .then(addTimeOut)
+                    .then(addTimeOut)
                     .then(() =>
                         q.run({ cache: false }).then(result2 => {
                             const [entities] = result2;
@@ -406,6 +407,9 @@ describe('Integration Test **wrapped** Datastore', () => {
                 .then(
                     () => cache.queries.set(q, [{ category }]) // prime the cache with only 1 result
                 )
+                .then(addTimeOut)
+                .then(addTimeOut)
+                .then(addTimeOut)
                 .then(() => q.run())
                 .then(([entities]) => {
                     expect(entities.length).equal(2); // make sure we we do have our 2 entities
