@@ -13,7 +13,7 @@
             "rimraf ./local-datastore && gcloud beta emulators datastore start --data-dir=$PWD/local-datastore",
         "pretest": "npm run lint",
         "prettier": "prettier --write \"{lib,test}/**/*.js\"",
-        "test": "DATASTORE_EMULATOR_HOST=localhost:8081 mocha test --recursive --exit --timeout 3000 --integration",
+        "test": "DATASTORE_EMULATOR_HOST=localhost:8081 mocha test --recursive --exit --timeout 10000 --integration",
         "release": "standard-version"
     },
     "pre-commit": ["prettier"],
@@ -38,6 +38,9 @@
     "homepage": "https://github.com/sebelga/nsql-cache-datastore#readme",
     "dependencies": {
         "arrify": "1.0.1"
+    },
+    "peerDependencies": {
+        "nsql-cache": "^1.1.2"
     },
     "devDependencies": {
         "@google-cloud/datastore": "^1.4.0",
