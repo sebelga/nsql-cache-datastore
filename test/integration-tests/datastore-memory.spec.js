@@ -122,7 +122,7 @@ describe('Integration Tests (Datastore & Memory cache)', () => {
                             expect(result).deep.equal(entityData);
                         })
                         .then(() =>
-                            cache.keys.read(key).then(result => {
+                            cache.keys.read(key).then(([result]) => {
                                 expect(result).deep.equal(entityData);
                                 expect(result[ds.KEY]).equal(key);
                                 expect(ds.get.callCount).equal(1);
@@ -248,7 +248,7 @@ describe('Integration Test **wrapped** Datastore', () => {
                                 expect(result).deep.equal(entityData);
                             })
                             .then(() =>
-                                cache.keys.read(key).then(result => {
+                                cache.keys.read(key).then(([result]) => {
                                     expect(result).contains(entityData);
                                     expect(result[dsWrapped.KEY]).deep.equal(key);
                                 })
