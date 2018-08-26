@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.4"></a>
+## [1.1.4](https://github.com/sebelga/nsql-cache-datastore/compare/v1.1.3...v1.1.4) (2018-08-26)
+
+
+### Bug Fixes
+
+* **postGetEntity:** Only wrap entities in array if not already an Array ([95aa0dc](https://github.com/sebelga/nsql-cache-datastore/commit/95aa0dc))
+
+
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/sebelga/nsql-cache-datastore/compare/v1.1.2...v1.1.3) (2018-08-18)
 
