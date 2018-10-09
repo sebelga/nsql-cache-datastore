@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.5"></a>
+## [1.1.5](https://github.com/sebelga/nsql-cache-datastore/compare/v1.1.4...v1.1.5) (2018-10-09)
+
+
+### Bug Fixes
+
+* **dsQueryToString:** Allow datastore.int() value in filter ([19fd2ac](https://github.com/sebelga/nsql-cache-datastore/commit/19fd2ac)), closes [#3](https://github.com/sebelga/nsql-cache-datastore/issues/3)
+
+
+
 <a name="1.1.4"></a>
 ## [1.1.4](https://github.com/sebelga/nsql-cache-datastore/compare/v1.1.3...v1.1.4) (2018-08-26)
 
