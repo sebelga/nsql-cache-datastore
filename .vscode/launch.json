@@ -24,6 +24,26 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Mocha Tests nvm",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "-u",
+                "tdd",
+                "--timeout",
+                "999999",
+                "--colors",
+                "--recursive",
+                "--exit",
+                "${workspaceFolder}/test"
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "runtimeExecutable": "${workspaceRoot}/node.sh",
+            "outputCapture": "std",
+            "autoAttachChildProcesses": true
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Mocha Integration Tests",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": [

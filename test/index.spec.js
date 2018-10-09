@@ -34,6 +34,7 @@ describe('Google Datastore adapter', () => {
             .filter('name', 'Sympresa')
             .filter('field1', '<', 123)
             .filter('field2', '>', 789)
+            .filter('age', '>', ds.int(18))
             .groupBy(['field1', 'field2'])
             .hasAncestor(ds.key(['Parent', 123]))
             .limit(10)
@@ -59,7 +60,7 @@ describe('Google Datastore adapter', () => {
             const str3 = queryToString(q3, { hash: false });
 
             expect(str1).equal(
-                `Company${separator}com.domain.dev${separator}name=Sympresafield1<123field2>789__key__HAS_ANCESTORParent${separator}123${separator}field1field2${separator}10${separator}5${separator}size-${separator}namesize${separator}X${separator}Y` // eslint-disable-line
+                `Company${separator}com.domain.dev${separator}name=Sympresafield1<123field2>789age>DS_INT(18)__key__HAS_ANCESTORParent${separator}123${separator}field1field2${separator}10${separator}5${separator}size-${separator}namesize${separator}X${separator}Y` // eslint-disable-line
             );
             expect(str2).equal(
                 `User${separator + separator}name=john${separator +
