@@ -1,6 +1,6 @@
 {
   "name": "nsql-cache-datastore",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Google Datastore adapter for nsql-cache",
   "main": "index.js",
   "directories": {
