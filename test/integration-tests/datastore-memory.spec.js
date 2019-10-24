@@ -2,7 +2,7 @@
 
 const { argv } = require('yargs');
 
-const Datastore = require('@google-cloud/datastore');
+const { Datastore } = require('@google-cloud/datastore');
 const chai = require('chai');
 const sinon = require('sinon');
 const NsqlCache = require('nsql-cache');

@@ -1,7 +1,9 @@
 'use strict';
 
 const chai = require('chai');
-const ds = require('@google-cloud/datastore')();
+const { Datastore } = require('@google-cloud/datastore');
+
+const ds = new Datastore();
 const dsAdapter = require('../lib')(ds);
 
 const { keyToString, queryToString } = dsAdapter;

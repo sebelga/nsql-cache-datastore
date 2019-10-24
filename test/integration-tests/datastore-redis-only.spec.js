@@ -1,6 +1,6 @@
 'use strict';
 
-const Datastore = require('@google-cloud/datastore');
+const { Datastore } = require('@google-cloud/datastore');
 const chai = require('chai');
 const redisStore = require('cache-manager-redis-store');
 const NsqlCache = require('nsql-cache');

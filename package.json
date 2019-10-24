@@ -44,7 +44,7 @@
     "nsql-cache": "^1.1.4"
   },
   "devDependencies": {
-    "@google-cloud/datastore": "^1.4.0",
+    "@google-cloud/datastore": "^4.0.0",
     "cache-manager-redis-store": "^1.4.0",
     "chai": "^3.5.0",
     "commitizen": "^2.9.6",
